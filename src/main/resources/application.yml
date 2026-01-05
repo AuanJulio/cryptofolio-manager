@@ -22,3 +22,4 @@ cryptofolio:
   client:
     coingecko:
       url: https://api.coingecko.com/api/v3
+      key: ${COINGECKO_API_KEY}
