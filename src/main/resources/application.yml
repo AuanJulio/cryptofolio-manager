@@ -19,6 +19,8 @@ spring:
     auto-index-creation: true
 
 cryptofolio:
+  jwt:
+    secret: ${JWT_SECRET}
   client:
     coingecko:
       url: https://api.coingecko.com/api/v3
