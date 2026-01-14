@@ -10,7 +10,7 @@ import java.util.Map;
 @FeignClient(name = "coin-gecko-client", url = "${cryptofolio.client.coingecko.url}")
 public interface CoinGeckoClient {
 
-    @GetMapping
+    @GetMapping("/simple/price")
     Map<String, Map<String, Double>> getSimplePrice(
             @RequestParam String ids,
             @RequestParam("vs_currencies") String vsCurrencies,
