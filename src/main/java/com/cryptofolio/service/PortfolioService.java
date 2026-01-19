@@ -26,31 +26,14 @@ import java.util.Optional;
 public class PortfolioService {
 
     private final PortfolioRepository portfolioRepository;
-    private final CoinGeckoClient coinGeckoClient;
+    private final CoinGeckoService coinGeckoService;
 
     @Value("${cryptofolio.client.coingecko.key}")
     private String apiKey;
 
-    @Cacheable(value = "prices", key = "#coinId")
-    public BigDecimal getPrice(String coinId) {
-
-        Map<String, Map<String, Double>> response = coinGeckoClient.getSimplePrice(
-                coinId, "usd", apiKey
-        );
-
-        if(!ObjectUtils.isEmpty(response) && response.containsKey(coinId)) {
-            Map<String, Double> currencyMap = response.get(coinId);
-
-            if (currencyMap.containsKey("usd")) {
-                return BigDecimal.valueOf(currencyMap.get("usd"));
-            }
-        }
-
-        throw new ResourceNotFoundException("Price not found");
-
-    }
-
     public Portfolio addTransaction(String userId, TransactionRequest request) {
+
+        coinGeckoService.validateCoinExists(request.coinId());
 
         Portfolio portfolio = portfolioRepository.findByUserId(userId)
                 .orElse(Portfolio
@@ -121,7 +104,7 @@ public class PortfolioService {
         BigDecimal totalValue = BigDecimal.ZERO;
 
         for (AssetItem assetItem : portfolio.getAssets()) {
-            BigDecimal currentValue = getPrice(assetItem.getCoinId());
+            BigDecimal currentValue = coinGeckoService.getPrice(assetItem.getCoinId());
             BigDecimal currentAssetValue = assetItem.getQuantity().multiply(currentValue);
             BigDecimal investedValue = assetItem.getQuantity().multiply(assetItem.getAveragePrice());
 
