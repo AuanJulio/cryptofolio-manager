@@ -7,6 +7,7 @@ import com.cryptofolio.dto.response.AssetResponse;
 import com.cryptofolio.dto.response.PortfolioResponse;
 import com.cryptofolio.entity.AssetItem;
 import com.cryptofolio.entity.Portfolio;
+import com.cryptofolio.exceptions.ResourceNotFoundException;
 import com.cryptofolio.repository.PortfolioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,7 +46,7 @@ public class PortfolioService {
             }
         }
 
-        throw new RuntimeException("Price not found");
+        throw new ResourceNotFoundException("Price not found");
 
     }
 
@@ -88,13 +89,13 @@ public class PortfolioService {
             }
         } else if(request.type().equals(TransactionType.SELL)) {
             if(optAssetItem.isEmpty()) {
-                throw new RuntimeException("Asset not found");
+                throw new ResourceNotFoundException("Asset not found");
             }
 
             assetItem = optAssetItem.get();
 
             if(assetItem.getQuantity().compareTo(request.quantity()) < 0) {
-                throw new RuntimeException("Not enough quantity");
+                throw new ResourceNotFoundException("Not enough quantity");
             }
 
             BigDecimal newQuantity = assetItem.getQuantity().subtract(request.quantity());
@@ -113,7 +114,7 @@ public class PortfolioService {
     public PortfolioResponse getPortfolioById(String id) {
 
         Portfolio portfolio = portfolioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Portfolio not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Portfolio not found"));
 
         List<AssetResponse> assetResponses = new ArrayList<>();
         BigDecimal totalInvested = BigDecimal.ZERO;

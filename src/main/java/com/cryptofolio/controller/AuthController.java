@@ -5,6 +5,7 @@ import com.cryptofolio.dto.request.UserRequest;
 import com.cryptofolio.dto.response.LoginResponse;
 import com.cryptofolio.dto.response.UserResponse;
 import com.cryptofolio.entity.User;
+import com.cryptofolio.exceptions.UsernameOrPasswordInvalidException;
 import com.cryptofolio.mapper.UserMapper;
 import com.cryptofolio.service.TokenService;
 import com.cryptofolio.service.UserService;
@@ -48,7 +49,7 @@ public class AuthController {
 
             return ResponseEntity.status(HttpStatus.OK).body(new LoginResponse(token));
         } catch (BadCredentialsException e) {
-            throw new RuntimeException("Invalid username or password.");
+            throw new UsernameOrPasswordInvalidException("Invalid username or password.");
         }
     }
 

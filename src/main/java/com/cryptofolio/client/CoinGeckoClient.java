@@ -14,7 +14,7 @@ public interface CoinGeckoClient {
     Map<String, Map<String, Double>> getSimplePrice(
             @RequestParam String ids,
             @RequestParam("vs_currencies") String vsCurrencies,
-            @RequestHeader("x-cg-pro-api-key") String apiKey
+            @RequestHeader("x-cg-demo-api-key") String apiKey
     );
 
 }
