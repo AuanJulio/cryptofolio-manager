@@ -33,7 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             Optional<UserResponse> user = tokenService.validateToken(token);
             if(user.isPresent()) {
                 UserResponse userResponse = user.get();
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, null);
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userResponse, null, null);
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
             filterChain.doFilter(request, response);

@@ -50,12 +50,12 @@ public class PortfolioService {
 
     }
 
-    public Portfolio addTransaction(String portfolioId, TransactionRequest request) {
+    public Portfolio addTransaction(String userId, TransactionRequest request) {
 
-        Portfolio portfolio = portfolioRepository.findById(portfolioId)
+        Portfolio portfolio = portfolioRepository.findByUserId(userId)
                 .orElse(Portfolio
                         .builder()
-                        .id(portfolioId)
+                        .userId(userId)
                         .assets(new ArrayList<>())
                         .build());
 
@@ -111,9 +111,9 @@ public class PortfolioService {
         return portfolioRepository.save(portfolio);
     }
 
-    public PortfolioResponse getPortfolioById(String id) {
+    public PortfolioResponse getPortfolioById(String userId) {
 
-        Portfolio portfolio = portfolioRepository.findById(id)
+        Portfolio portfolio = portfolioRepository.findByUserId(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Portfolio not found"));
 
         List<AssetResponse> assetResponses = new ArrayList<>();
@@ -146,7 +146,7 @@ public class PortfolioService {
         }
 
         return new PortfolioResponse(
-                id,
+                userId,
                 totalInvested,
                 totalValue,
                 assetResponses
