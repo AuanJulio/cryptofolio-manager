@@ -25,3 +25,9 @@ cryptofolio:
     coingecko:
       url: https://api.coingecko.com/api/v3
       key: ${COINGECKO_API_KEY}
+
+springdoc:
+  api-docs:
+    path: /api/api-docs
+  swagger-ui:
+    path: /swagger/index.html

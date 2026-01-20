@@ -1,5 +1,6 @@
 package com.cryptofolio.controller;
 
+import com.cryptofolio.controller.docs.PortfolioControllerDocs;
 import com.cryptofolio.dto.request.TransactionRequest;
 import com.cryptofolio.dto.response.PortfolioResponse;
 import com.cryptofolio.dto.response.UserResponse;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/portfolio")
 @RequiredArgsConstructor
-public class PortfolioController {
+public class PortfolioController implements PortfolioControllerDocs {
 
     private final PortfolioService portfolioService;
 

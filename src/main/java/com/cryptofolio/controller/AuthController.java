@@ -1,5 +1,6 @@
 package com.cryptofolio.controller;
 
+import com.cryptofolio.controller.docs.AuthControllerDocs;
 import com.cryptofolio.dto.request.LoginRequest;
 import com.cryptofolio.dto.request.UserRequest;
 import com.cryptofolio.dto.response.LoginResponse;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthController implements AuthControllerDocs {
 
     private final TokenService tokenService;
     private final UserService userService;
